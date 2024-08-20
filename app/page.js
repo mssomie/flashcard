@@ -1,3 +1,4 @@
+'use client'
 import Image from "next/image";
 import getStripe from "@/utils/get-stripe";
 import {SignedIn, SignedOut, UserButton} from '@clerk/nextjs'
@@ -5,7 +6,29 @@ import { Grid, Box, Container, Toolbar, AppBar, Button, Typography} from "@mui/m
 import Head from "next/head";
 
 
+const handleSubmit = async ()=>{
+  const checkoutSession = await fetch('/api/checkout_session', {
+    method: 'POST',
+    headers:{
+      origin: 'http://localhost:3000'
+    },
+  })
 
+  const checkoutSessionJson = await checkoutSession.json()
+
+  if (checkoutSession.statusCode === 500){
+    console.error(checkoutSession.message);
+    return
+  }
+
+  const stripe = await getStripe()
+  const {error} = await stripe.redirectToCheckout({
+    sessionId: checkoutSessionJson.id
+  })
+  if (error){
+    console.warn(error.message)
+  }
+}
 
 export default function Home() {
   return (
@@ -103,7 +126,7 @@ export default function Home() {
           <Typography>
             Access to flashcard generation with limited storage
           </Typography>
-          <Button variant ="contained">Choose plan</Button>
+          <Button variant ="contained" onClick={handleSubmit}>Choose plan</Button>
           </Box>
           </Grid>
         <Grid item xs={12} md={4}>
