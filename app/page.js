@@ -4,6 +4,8 @@ import getStripe from "@/utils/get-stripe";
 import {SignedIn, SignedOut, UserButton} from '@clerk/nextjs'
 import { Grid, Box, Container, Toolbar, AppBar, Button, Typography} from "@mui/material";
 import Head from "next/head";
+import Link from "next/link";
+
 
 
 const handleSubmit = async ()=>{
@@ -61,7 +63,10 @@ export default function Home() {
 
       </Typography>
       <Button varirant="contained" color="primary" sx={{mt: 2}}>
+      <Link href="/generate" passHref>
         Get Started
+
+      </Link>
 
       </Button>
     </Box>
