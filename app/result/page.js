@@ -4,8 +4,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import getStripe from "@/utils/get-stripe"
 import { useSearchParams } from "next/navigation"
-import { CircularProgress, Typography } from "@mui/material"
-import { Box, Container, Typography } from "@mui/material"
+import { CircularProgress, Box, Container, Typography } from "@mui/material"
 
 const ResultPage = () =>{
     const router = useRouter()
@@ -64,7 +63,7 @@ const ResultPage = () =>{
 
             }}>
                <Typography variant="h6">
-                {{error}}
+                {error}
                </Typography>
             </Container>
         )
